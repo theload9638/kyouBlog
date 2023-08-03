@@ -58,7 +58,7 @@ createTime:2023/7/10
 
 ## 5.1.主页
 
-![image-20230803143222835](README.assets\image-20230803143222835.png)
+![image-20230803143222835](..\README.assets\image-20230803143222835.png)
 
 ## 5.2–留言板
 
