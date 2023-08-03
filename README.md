@@ -3,7 +3,7 @@ createTime:2023/7/10
 # kyouBlog
 
 基于springboot,vue3,mybatis-plus,Dubbo,Minio,Redis,springSecurity,JWT的个人博客系统
---1.0版本完成时间：2023/08/03  总耗时：24天
+--1.0版本完成时间：2023/08/03  总耗时：24天，希望大家能够给个star
 
 # 1.后端文件结构
 
