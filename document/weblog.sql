@@ -496,7 +496,7 @@ CREATE TABLE `user`  (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'admin', '$2a$10$RoIQHqASHRkV1yL4L3t2teDqtvaF77oD3yy8iU9.G1EL3nvDugXWK', '2967861744@qq.com', '1', 'kyou', 'http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg', '超级管理员', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-14 09:51:07', '0', '1', '2023-08-01 22:14:53');
-INSERT INTO `user` VALUES (2, 'commonUser', '$2a$10$dBoIVVOjY4TqqWKJr0bmoOoH0oo/TJNojqO4ExJQC94dGGFFipdsi', '2485119372@qq.com', '1', NULL, 'http://kyou:9000/kkk/8f471cdf6df64c9f969e9e6b19b7ed27.jpg', '一名普通的用户', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:01:08', '1', '2', '2023-08-01 22:17:09');
+INSERT INTO `user` VALUES (2, 'commonUser', '$2a$10$dBoIVVOjY4TqqWKJr0bmoOoH0oo/TJNojqO4ExJQC94dGGFFipdsi', '2498339372@qq.com', '1', NULL, 'http://kyou:9000/kkk/8f471cdf6df64c9f969e9e6b19b7ed27.jpg', '一名普通的用户', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:01:08', '1', '2', '2023-08-01 22:17:09');
 INSERT INTO `user` VALUES (3, 'test1', '$2a$10$NeVEzQAJQZIThgxn7LmXpOOX0zmHfDOwtOvftlOPt5CwzjbvvXyhi', 'asx123@123.com', '1', '我的新名字', 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100', '只是一个普普通通的测试用户罢了', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:20:05', '1', '3', '2023-08-01 08:58:19');
 INSERT INTO `user` VALUES (4, 'test2', '$2a$10$FlwHtD7gPRp8rA9kHiGjveaAYwKooDRPHkuXvEj2aB6OST.C5olUq', 'test2@123.com', '1', '测试用户2', NULL, '测试用户2', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-21 01:11:24', '1', '4', '2023-07-22 09:34:18');
 INSERT INTO `user` VALUES (5, 'test3', '$2a$10$gooI8kcuSgiJLHQZ4s54e.yeo1wGIORASk5WTm89KZHzYR4Uh1i.S', 'test3@123.com', '1', '测试拥护3', NULL, '测试', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-21 01:12:44', '1', '5', '2023-07-22 09:00:27');
