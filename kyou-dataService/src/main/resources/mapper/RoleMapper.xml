@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyou.blog.dataService.mapper.RoleMapper">
+    <resultMap id="base" type="com.kyou.blog.model.entity.Role" autoMapping="true"/>
+    <insert id="saveUserRoles">
+        insert into user_role(uid,rid) values
+        <foreach collection="rids" separator="," item="rid" >(#{uid},#{rid})</foreach>
+    </insert>
+    <select id="getAssignRole" resultMap="base">
+        select id,name,key_name,status,del_flag,
+               create_by,create_time,update_by,
+               update_time from role where id in (select rid from user_role where uid=#{id})
+    </select>
+    <select id="getRolesByUser" resultMap="base">
+        select * from role where status='0' and del_flag='0'
+                             and id in (select rid from user_role where uid=#{id})
+    </select>
+    <select id="selectIdsByRName" resultType="java.lang.Long">
+        select id from role where
+        name in (<foreach
+            collection="list"
+            separator=","
+            item="n">#{n}</foreach>
+        )
+    </select>
+</mapper>

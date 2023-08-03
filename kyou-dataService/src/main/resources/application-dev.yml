@@ -1,0 +1,35 @@
+
+spring:
+  messages:
+    encoding: UTF-8
+  main:
+    banner-mode: off
+  datasource: #mysql数据库
+      url: jdbc:mysql://localhost:3306/weblog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: root
+      username: root
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    lazy-loading-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: partial
+  global-config:
+    db-config:
+      id-type: auto
+dubbo:
+      application:
+          name: kyou-dataService
+      registry:
+          address: zookeeper://kyou:2181
+          protocol: zookeeper
+      protocol:
+        name: dubbo
+        port: 20880
+      scan:
+          base-packages: com.kyou.blog.dataService.service
+      provider:
+          timeout: 20000
+          retries: 0

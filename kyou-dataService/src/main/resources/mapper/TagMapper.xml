@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyou.blog.dataService.mapper.TagMapper">
+    <insert id="addArticleTags">
+        insert into article_tag(aid,tid) values
+        <foreach collection="tids" item="tid" separator=",">(#{aid},#{tid})</foreach>
+    </insert>
+
+    <select id="selectIdsByNames" resultType="java.lang.Long">
+        select id from tag
+        where name in (<foreach collection="list" separator="," item="name">#{name}</foreach> )
+    </select>
+    <select id="getArticleTags" resultType="java.lang.String">
+        select name from tag where id in
+                                (select tid from article_tag where aid=#{id})
+    </select>
+    <select id="getTagsByTids" resultType="com.kyou.blog.model.entity.Tag">
+        select * from tag
+          <if test="tids!=null">
+              where id in (<foreach collection="list" item="tid" separator=",">#{tid}</foreach> )
+          </if>
+    </select>
+    <select id="getHotTag" resultType="java.lang.String">
+        select name from tag where id in (<foreach collection="list" item="id" separator=",">#{id}</foreach> );
+    </select>
+
+
+</mapper>

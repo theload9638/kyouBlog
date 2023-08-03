@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyou.blog.dataService.mapper.MenuMapper">
+
+    <resultMap id="base" type="com.kyou.blog.model.entity.Menu" autoMapping="true"/>
+    <insert id="assign">
+        insert into role_menu (rid,mid) values
+        <foreach collection="mids" item="mid" separator=",">(#{rid},#{mid})</foreach>
+    </insert>
+    <select id="selectMenuPersByRid" resultType="string">
+        select perms from menu
+                     where status='0'
+                       and id in (select mid from role_menu where rid=#{id})
+    </select>
+    <select id="getMenuByRids" resultMap="base">
+        select * from menu
+        where status='0' and id in
+       (select distinct mid from role_menu where rid in (
+           <foreach collection="list" separator="," item="id">#{id}</foreach>))
+    </select>
+
+</mapper>

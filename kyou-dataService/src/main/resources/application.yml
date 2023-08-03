@@ -1,0 +1,12 @@
+
+spring:
+  profiles:
+    default: dev
+  application:
+    name: dataService
+
+server:
+  port: 8001
+
+
+

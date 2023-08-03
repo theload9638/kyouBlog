@@ -1,0 +1,10 @@
+
+spring:
+  profiles:
+    default: dev
+  application:
+    name: background
+server:
+  port: 8002
+
+

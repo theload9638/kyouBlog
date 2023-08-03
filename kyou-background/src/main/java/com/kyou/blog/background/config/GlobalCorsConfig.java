@@ -1,0 +1,36 @@
+package com.kyou.blog.background.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+/**
+ * @author CC
+ * time 2023-06-03
+ * description
+ */
+@Configuration
+public class GlobalCorsConfig {
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        //允许所有域名进行跨域调用，可正则
+        config.addAllowedOriginPattern("*");
+        //允许跨越发送cookie
+        config.setAllowCredentials(true);
+        //放行全部原始头信息
+        config.addAllowedHeader("*");
+        //允许所有请求方法跨域调用
+        config.addAllowedMethod("*");
+        //暴露Authrozation
+        config.addExposedHeader("Authorization");
+        //设置最大时间
+        config.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
+}

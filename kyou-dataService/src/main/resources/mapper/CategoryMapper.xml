@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kyou.blog.dataService.mapper.CategoryMapper">
+
+    <insert id="addArticleCategories">
+        insert into article_category(aid,cid) values
+          <foreach collection="cids" separator="," item="cid">(#{aid},#{cid})</foreach>
+    </insert>
+    <select id="getArticleCategoryIds" resultType="java.lang.Long">
+        select id from category where id in
+         (select cid from article_category where aid=#{id})
+    </select>
+    <select id="getCategoriesByCids" resultType="com.kyou.blog.model.entity.Category">
+        select * from category
+        <if test="cids!=null">
+            where id in (<foreach collection="list" separator="," item="cid">#{cid}</foreach> )
+        </if>
+    </select>
+</mapper>
