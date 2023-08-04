@@ -2,7 +2,6 @@ package com.kyou.blog.background.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kyou.blog.background.properties.CCProperties;
-import com.kyou.blog.background.webUtil.AuthenticationContextHolder;
 import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.background.webUtil.WebUtil;
 import com.kyou.blog.dataService.service.MenuService;
@@ -67,7 +66,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter implements S
                                 null, loginUser.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                AuthenticationContextHolder.setContext(authenticationToken);
             }
         } catch (Exception e) {
            log.info("[TokenAuthenticationFilter]中本次请求token校验失败-->{}",uri);

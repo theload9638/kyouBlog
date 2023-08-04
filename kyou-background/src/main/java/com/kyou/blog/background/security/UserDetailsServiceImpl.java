@@ -68,6 +68,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         Authentication usernamePasswordAuthenticationToken = AuthenticationContextHolder.getContext();
         String password = usernamePasswordAuthenticationToken.getCredentials().toString();
+        AuthenticationContextHolder.clearContext();
         String val = redisUtil.getVal(RedisConstant.RETRY_LOGIN + user.getId());
         Integer retryCount;
         if(val==null||"{}".equals(val)){

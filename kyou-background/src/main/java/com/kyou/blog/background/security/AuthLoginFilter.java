@@ -4,7 +4,6 @@ import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kyou.blog.background.webUtil.AuthenticationContextHolder;
 import com.kyou.blog.background.webUtil.RedisUtil;
-import com.kyou.blog.common.Result;
 import com.kyou.blog.common.constant.MsgConstant;
 import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.model.vo.CodeVo;
