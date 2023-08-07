@@ -3,18 +3,14 @@ package com.kyou.blog.background.web;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.common.emuration.OperationType;
-import com.kyou.blog.dataService.service.SysLogService;
 import com.kyou.blog.model.dto.PageLogDto;
 import com.kyou.blog.model.entity.SysLog;
 import com.kyou.blog.model.vo.PageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +28,8 @@ import java.util.List;
 @Api(value = "系统日志管理")
 @RestController
 @RequestMapping("/sys/log")
-public class SysLogController
+public class SysLogController extends BaseController
 {
-
-    @DubboReference(interfaceClass = SysLogService.class)
-    private SysLogService sysLogService;
-    @Autowired
-    private RedisUtil redisUtil;
 
     @ApiOperation("获取日志分页记录")
     @PreAuthorize("@auth.authenticate()")

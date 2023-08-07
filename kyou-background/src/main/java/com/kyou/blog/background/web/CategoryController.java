@@ -3,22 +3,17 @@ package com.kyou.blog.background.web;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.background.webUtil.WebUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
 import com.kyou.blog.common.constant.MsgConstant;
 import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.common.emuration.OperationType;
-import com.kyou.blog.common.util.SysContext;
-import com.kyou.blog.dataService.service.CategoryService;
 import com.kyou.blog.model.entity.Category;
 import com.kyou.blog.model.vo.ArticleCategoryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +23,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -43,13 +37,7 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 @RequestMapping("/sys/category")
-public class CategoryController {
-
-    @DubboReference(interfaceClass = CategoryService.class)
-    private CategoryService categoryService;
-    @Autowired
-    private RedisUtil redisUtil;
-
+public class CategoryController extends BaseController{
     @ApiOperation("获取展示的分类列表")
     @GetMapping("/list")
     @PreAuthorize("@auth.authenticate()")

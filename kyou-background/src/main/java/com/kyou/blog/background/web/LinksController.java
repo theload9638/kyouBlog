@@ -3,15 +3,11 @@ package com.kyou.blog.background.web;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.constant.RedisConstant;
-import com.kyou.blog.dataService.service.LinksService;
 import com.kyou.blog.model.entity.Links;
 import com.kyou.blog.model.vo.PageVo;
 import io.swagger.annotations.ApiOperation;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
-import java.util.List;
 
 /**
  * <p>
@@ -31,12 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sys/links")
-public class LinksController {
-
-    @DubboReference(interfaceClass = LinksService.class)
-    private LinksService linksService;
-    @Autowired
-    private RedisUtil redisUtil;
+public class LinksController extends BaseController{
 
     @ApiOperation("获取所有链接")
     @GetMapping("/list")

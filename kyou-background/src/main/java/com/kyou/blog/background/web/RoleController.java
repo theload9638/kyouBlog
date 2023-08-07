@@ -3,19 +3,15 @@ package com.kyou.blog.background.web;
 
 import cn.hutool.json.JSONUtil;
 
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
 import com.kyou.blog.common.constant.RedisConstant;
 
 import com.kyou.blog.common.emuration.OperationType;
 import com.kyou.blog.common.util.SysContext;
-import com.kyou.blog.dataService.service.RoleService;
 import com.kyou.blog.model.entity.Role;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +20,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -37,11 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Api(tags = "角色相关接口")
 @RestController
 @RequestMapping("/sys/role")
-public class RoleController {
-    @DubboReference(interfaceClass = RoleService.class)
-    private RoleService roleService;
-    @Autowired
-    private RedisUtil redisUtil;
+public class RoleController extends BaseController{
 
     @ApiOperation("展示角色列表")
     @GetMapping("/list")

@@ -2,32 +2,25 @@ package com.kyou.blog.background.web;
 
 import com.kyou.blog.background.security.AuthHandler;
 import com.kyou.blog.background.security.SysUser;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
 import com.kyou.blog.common.constant.MsgConstant;
 import com.kyou.blog.common.emuration.OperationType;
 import com.kyou.blog.common.util.MenuHelper;
-import com.kyou.blog.dataService.service.MenuService;
-import com.kyou.blog.dataService.service.RoleService;
 import com.kyou.blog.model.entity.Menu;
 import com.kyou.blog.model.entity.Role;
 import com.kyou.blog.model.vo.MenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.dubbo.config.annotation.DubboReference;
+
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -41,14 +34,7 @@ import java.util.stream.Collectors;
 @Api(tags = "菜单相关接口")
 @RestController
 @RequestMapping("/sys/menu")
-public class MenuController {
-    @DubboReference(interfaceClass = MenuService.class)
-    private MenuService menuService;
-    @DubboReference(interfaceClass = RoleService.class)
-    private RoleService roleService;
-    @Autowired
-    private RedisUtil redisUtil;
-
+public class MenuController extends BaseController{
     @ApiOperation("获取所有树形菜单")
     @GetMapping("/getMenus")
     @PreAuthorize("@auth.authenticate()")

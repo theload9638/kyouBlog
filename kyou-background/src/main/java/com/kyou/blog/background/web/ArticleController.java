@@ -65,23 +65,9 @@ import java.util.stream.Collectors;
 @Api(tags = "文章相关接口")
 @RestController
 @RequestMapping("/sys/article")
-public class ArticleController {
-    @DubboReference(interfaceClass = ArticleService.class)
-    private ArticleService articleService;
-    @DubboReference(interfaceClass = TagService.class)
-    private TagService tagService;
-    @DubboReference(interfaceClass = CategoryService.class)
-    private CategoryService categoryService;
-    @Autowired
-    private RedisUtil redisUtil;
-    @DubboReference(interfaceClass = RoleService.class)
-    private RoleService roleService;
+public class ArticleController extends BaseController{
     @Autowired
     private MinioUtil minioUtil;
-    @DubboReference(interfaceClass = UserService.class)
-    private UserService userService;
-    @DubboReference(interfaceClass = CommentsService.class )
-    private CommentsService commentsService;
     @Autowired
     private CCProperties ccProperties;
     @Autowired

@@ -22,12 +22,10 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -47,27 +45,10 @@ import java.util.stream.Collectors;
 @Api("首页展示数据控制层")
 @RestController
 //@Slf4j
-@RequestMapping("/sys/index")
-public class IndexController {
-    @DubboReference(interfaceClass = ArticleService.class)
-    private ArticleService articleService;
-    @DubboReference(interfaceClass = TagService.class)
-    private TagService tagService;
-    @DubboReference(interfaceClass = UserService.class)
-    private UserService userService;
-    @DubboReference(interfaceClass = CategoryService.class)
-    private CategoryService categoryService;
-    @DubboReference(interfaceClass = CommentsService.class)
-    private CommentsService commentsService;
-    @DubboReference(interfaceClass = LinksService.class)
-    private LinksService linksService;
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
-    @Autowired
-    private RedisUtil redisUtil;
+public class IndexController extends BaseController{
 
     @ApiOperation("后台系统首页数据")
-    @GetMapping("/back")
+    @GetMapping("/sys/index/back")
     @PreAuthorize("@auth.authenticate()")
     public Result<BackInfoVo> backInfo()
     {
@@ -127,7 +108,7 @@ public class IndexController {
     }
 
     @ApiOperation("获取首页数据")
-    @GetMapping("/front")
+    @GetMapping("/sys/index/front")
     public Result<FrontInfoVo> frontInfo(@Valid PageUserDto params)
     {
         String val = redisUtil.getVal(RedisConstant.KYOU_FRONT);

@@ -72,6 +72,8 @@ spring:
   cache:
     redis:
       time-to-live: 1800000
+
+
 dubbo:
   application:
     name: kyou-background #客户端应用名称

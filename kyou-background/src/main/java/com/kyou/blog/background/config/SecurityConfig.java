@@ -28,6 +28,9 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
@@ -55,8 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    @Autowired
-    private CorsFilter corsFilter;
     @Autowired
     private TokenAuthenticationFilter tokenAuthenticationFilter;
     @Autowired
@@ -93,8 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 注解标记允许匿名访问的url
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
-        urls.forEach(url -> registry.antMatchers(url).permitAll());
+//        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
+//        urls.forEach(url -> registry.antMatchers(url).permitAll());
         http.authorizeRequests()
                 //放行一些请求
                 .antMatchers(urls.toArray(new String[0])).permitAll()
@@ -113,8 +114,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAt(new AuthLoginFilter(redisUtil,authenticationManagerBean(),successHandler,failureHandler), UsernamePasswordAuthenticationFilter.class);
         // 认证失败处理类
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-        // 添加Logout filter
-//        http.logout().logoutUrl("/sys/user/exit").logoutSuccessHandler(new LogoutProcessHandler(userService));
         http.addFilterAt(tokenAuthenticationFilter, BasicAuthenticationFilter.class);
     }
     /**

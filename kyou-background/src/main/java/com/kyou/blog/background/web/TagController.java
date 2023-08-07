@@ -3,8 +3,6 @@ package com.kyou.blog.background.web;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.background.webUtil.WebUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
@@ -13,12 +11,9 @@ import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.common.emuration.OperationType;
 import com.kyou.blog.common.util.SysContext;
 
-import com.kyou.blog.dataService.service.TagService;
 import com.kyou.blog.model.entity.Tag;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +33,7 @@ import java.util.List;
 @Api(tags = "文章标签相关接口")
 @RestController
 @RequestMapping("/sys/tag")
-public class TagController {
-    @DubboReference(interfaceClass = TagService.class)
-    private TagService tagService;
-    @Autowired
-    private RedisUtil redisUtil;
+public class TagController extends BaseController{
 
     @ApiOperation("获取标签列表")
     @PreAuthorize("@auth.hasPerms('os:tags:select')")

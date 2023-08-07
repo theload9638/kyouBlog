@@ -93,15 +93,16 @@ export const loadView=(view)=>{
  //获取文章id
  const getAIds=async()=>{
   let ids=localStorage.getItem('aids');
-  if(ids!=undefined){
+  if(ids==undefined||ids==null){
     const res=await getPublishedIds();
     if(res.code==200){
       ids=res.data;
       }
       localStorage.setItem('aids',JSON.stringify(ids));
     }
-    if(ids&&ids instanceof Array){
+    if(ids){
       for (let i of ids){
+        console.log(i)
         const route={
           name:`article${i}`,
           path:`/article${i}`,

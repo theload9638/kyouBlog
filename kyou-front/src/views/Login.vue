@@ -20,7 +20,7 @@
       </form>
       <div class="register">
         <a class="backHome" @click="backFront">返回kyou博客  </a>|
-        <a class="forgotPwd">忘记密码?  </a>| 
+        <!-- <a class="forgotPwd">忘记密码?  </a>|  -->
         <a @click="toRegister" class="registerA">  立刻注册</a>
       </div>
     </div>
@@ -41,7 +41,6 @@ export default defineComponent({
     const password=ref('123456');
     const verifyCode=ref('');
     const rememberMe=ref(false);
-
     //用户名错误
     const nameErr=ref('')
     //密码错误
@@ -195,7 +194,7 @@ if (nameErr.value==''&&pwdErr.value==''&&codeErr.value==''
   lastRefreshVerifyCodeTime,isBand,refreshVerifyCode,
   toRegister,refreshVerifyCode,reset,onSubmit,
   nameErr,checkName,checkPwd,pwdErr,codeErr,loginErr,
-  backFront,username,password,verifyCode,rememberMe
+  backFront,username,password,verifyCode,rememberMe,
   
 }
 

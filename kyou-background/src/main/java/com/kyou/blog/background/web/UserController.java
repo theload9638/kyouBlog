@@ -18,7 +18,6 @@ import com.kyou.blog.common.emuration.OperationType;
 import com.kyou.blog.common.util.MinioUtil;
 import com.kyou.blog.common.util.SysContext;
 import com.kyou.blog.common.util.VerifyCodeUtil;
-import com.kyou.blog.dataService.service.*;
 import com.kyou.blog.model.dto.PageUserDto;
 import com.kyou.blog.model.dto.UserDto;
 import com.kyou.blog.model.dto.UserPwdDto;
@@ -27,24 +26,19 @@ import com.kyou.blog.model.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -67,35 +61,17 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 @RequestMapping("/sys/user")
-public class UserController {
-    @DubboReference(interfaceClass = UserService.class)
-    private UserService userService;
-    @DubboReference(interfaceClass = RoleService.class)
-    private RoleService roleService;
+public class UserController extends BaseController{
     @Autowired
     private RedisUtil redisUtil;
     @Autowired
     private MinioUtil minioUtil;
     @Autowired
     private CCProperties ccProperties;
-    @Resource
-    private AuthenticationManager authenticationManager;
-    @DubboReference(interfaceClass = UserFollowService.class)
-    private UserFollowService userFollowService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @DubboReference(interfaceClass = UserCommentService.class)
-    private UserCommentService userCommentService;
-    @DubboReference(interfaceClass = ArticleService.class)
-    private ArticleService articleService;
-    @DubboReference(interfaceClass = CommentsService.class)
-    private CommentsService commentsService;
     @Autowired
     private ThreadService threadService;
-    @Autowired
-    private AuthenticationSuccessHandler successHandler;
-    @Autowired
-    private AuthenticationFailureHandler failureHandler;
     /**
      *
      * @param k 游客id

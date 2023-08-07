@@ -4,7 +4,6 @@ package com.kyou.blog.background.web;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.background.webUtil.WebUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
@@ -13,7 +12,6 @@ import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.common.constant.StatusConstant;
 import com.kyou.blog.common.emuration.OperationType;
 import com.kyou.blog.common.util.SysContext;
-import com.kyou.blog.dataService.service.*;
 import com.kyou.blog.model.entity.*;
 import com.kyou.blog.model.vo.ArticleCommentVo;
 import com.kyou.blog.model.vo.CommentsVo;
@@ -21,9 +19,7 @@ import com.kyou.blog.model.vo.PageVo;
 import com.kyou.blog.model.vo.UserCommentInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -34,7 +30,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,20 +44,8 @@ import java.util.stream.Collectors;
 @Api(tags = "评论相关接口")
 @RestController
 @RequestMapping("/sys/comments")
-public class CommentsController {
+public class CommentsController extends BaseController{
 
-    @DubboReference(interfaceClass = CommentsService.class)
-    private CommentsService commentsService;
-    @DubboReference(interfaceClass = UserCommentService.class)
-    private UserCommentService userCommentService;
-    @DubboReference(interfaceClass = UserService.class)
-    private UserService userService;
-    @DubboReference(interfaceClass = ArticleService.class)
-    private ArticleService articleService;
-    @DubboReference(interfaceClass = RoleService.class)
-    private RoleService roleService;
-    @Autowired
-    private RedisUtil redisUtil;
     @ApiOperation("新增评论")
     @PutMapping
     @Log(value = OperationType.INSERT,title = "评论模块")
