@@ -15,7 +15,7 @@ import '@kangc/v-md-editor/lib/plugins/highlight-lines/highlight-lines.css';
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import Prism from 'prismjs';
-import * as echarts from 'echarts';
+
 
 VueMarkdownEditor.use(vuepressTheme, {Prism,});
 VueMarkdownEditor.use(createLineNumbertPlugin());
@@ -34,7 +34,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.config.globalProperties.$key = "http://localhost:8002";// 定义全局变量
 app.use(UndrawUi)
-app.config.globalProperties.$echarts = echarts
 app.use(VueMarkdownEditor);
 app.use(pinia)
 app.use(router)

@@ -1,9 +1,7 @@
 import requests from "../request";
 const base='sys/menu'
 
-export function getMenus(){
-    return fetch(`http://localhost:8002/${base}/getMenus`)
-}
+
 export function menuList(){
     return requests({
         url:`${base}/getMenus`,

@@ -1,4 +1,4 @@
-import { getMenus,menuList } from '@/api/back/menu'
+import { menuList } from '@/api/back/menu'
 import router from '@/router';
 import {getPublishedIds} from '@/api/back/article'
 import {getRegisterUserId } from '@/api/back/user'
@@ -102,7 +102,6 @@ export const loadView=(view)=>{
     }
     if(ids){
       for (let i of ids){
-        console.log(i)
         const route={
           name:`article${i}`,
           path:`/article${i}`,
@@ -138,51 +137,26 @@ const getUserIds=async ()=>{
 const loadUserHome=(id)=>{
   return ()=>import('../components/userHome/userHome'+id+'.vue')
 }
-
-
-export function handler(func){
-let cache=[];
-let i=0;
-const origin=window.fetch;
-window.fetch=(...args)=>{
-  if(cache[i]){
-    if(cache[i].status==='fulfilled'){
-      return cache[i].data;
-    }else if(cache[i].status==='rejected'){
-      throw cache[i].err;
+async function menuList1(){
+  const json=localStorage.getItem('routeList');
+  if(json){
+    const list=JSON.parse(json);
+    if(list instanceof Array){
+      list.forEach(i=>{
+        recursion(i.children);
+        i.component=loadView(i.component);
+        router.addRoute(i);
+      });
     }
+  }else{
+    const res=await menuList();
+    let routeList=[]
+    if(res.data){
+      routeList=addStatic(res.data);
+      routeList.forEach(item=>router.addRoute(item));
+    }
+    localStorage.setItem('routeList',JSON.stringify(routeList))
   }
-  const result={
-    status:'pending',
-    data:null,
-    err:null
-  };
-  cache[i++]=result; 
-  //发送请求
-  const prom=origin(...args).then(res=>res.json()).then(
-    (res)=>{
-      result.status='fulfilled';
-      result.data=res;
-    },
-    err=>{
-      result.status='rejected';
-      result.err=err;
-    }
-    );
-   //报错
-   throw prom  
-}
-try{
-  func()
-}catch(err){
-  if(err instanceof Promise){
-    const re=()=>{
-      i=0;
-      func();
-    }
-    err.then(re,re);
-  }
-}
 }
 //解决白屏
 const flag=localStorage.getItem('token');
@@ -219,27 +193,7 @@ router.beforeEach(async(to,from,next)=>{
     }
   }
 })
-async function menuList1(){
-  const json=localStorage.getItem('routeList');
-  if(json){
-    const list=JSON.parse(json);
-    if(list instanceof Array){
-      list.forEach(i=>{
-        recursion(i.children);
-        i.component=loadView(i.component);
-        router.addRoute(i);
-      });
-    }
-  }else{
-    const res=await menuList();
-    let routeList=[]
-    if(res.data){
-      routeList=addStatic(res.data);
-      routeList.forEach(item=>router.addRoute(item));
-    }
-    localStorage.setItem('routeList',JSON.stringify(routeList))
-  }
-}
+
 
 
 
