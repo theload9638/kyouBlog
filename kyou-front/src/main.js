@@ -1,7 +1,6 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import pinia from "./stores/store"
 import App from './App.vue'
 import router from './router'
 // markdown编辑插件 v-md-editer
@@ -35,7 +34,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.config.globalProperties.$key = "http://localhost:8002";// 定义全局变量
 app.use(UndrawUi)
 app.use(VueMarkdownEditor);
-app.use(pinia)
 app.use(router)
 
 app.mount('#app')

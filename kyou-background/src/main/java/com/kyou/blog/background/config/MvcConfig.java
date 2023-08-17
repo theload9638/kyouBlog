@@ -22,8 +22,6 @@ import java.util.List;
 //@EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer {
     @Autowired
-    private CCProperties ccProperties;
-    @Autowired
     private TokenFlushInterceptor tokenFlushInterceptor;
 
 
