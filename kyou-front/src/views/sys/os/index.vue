@@ -125,7 +125,6 @@
 import { defineComponent,onMounted,ref} from 'vue'
 import BackMainHeader from '@/components/BackMainHeader.vue'
 import { ElMessage } from 'element-plus'
-import emitter from '@/utils/event-bus.js'
 import router from '@/router'
 import {isAudit} from '@/api/back/role'
 import {pageArticle,
@@ -238,7 +237,7 @@ export default defineComponent({
             if(r.id==3){
                 router.push({name:'front'});
             }else{
-                router.push({path:'/article'+r.id});
+                router.push({path:'/article',query:{'id':r.id}});
             }    
         }
         //编辑文字

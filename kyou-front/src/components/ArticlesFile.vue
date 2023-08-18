@@ -32,7 +32,7 @@ onMounted(()=>{
 })
 //显示文章详情页
 const goArticleInfo=(id)=>{
-  router.push({path:'/article'+id});
+  router.push({path:'/article',query:{'id':id}});
 }      
 const dataList =ref([]);
 

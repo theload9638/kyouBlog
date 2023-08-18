@@ -127,8 +127,13 @@ public class UserController extends BaseController{
         user.setUpdateBy("0");
         userService.save(user);
         roleService.addUserRole(user.getId(), RoleConstant.COMMON);
-        //异步新增用户主页
-        threadService.generateUserHome(user.getId(),ccProperties.getFreemarkerUserHomeOutPut());
+        UserComment userComment = new UserComment();
+        userComment.setId(user.getId());
+        userComment.setExperience(0);
+        userComment.setLevel(1);
+        userComment.setHomeLink("/userHome?id="+user.getId());
+        //无需异步，已用 数据复制 代替 冗余文件
+//        threadService.generateUserHome(user.getId(),ccProperties.getFreemarkerUserHomeOutPut());
         return Result.success();
     }
     @ApiOperation("获取用户个人信息")

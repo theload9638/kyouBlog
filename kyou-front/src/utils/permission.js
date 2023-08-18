@@ -1,7 +1,5 @@
 import { menuList } from '@/api/back/menu'
 import router from '@/router';
-import {getPublishedIds} from '@/api/back/article'
-import {getRegisterUserId } from '@/api/back/user'
 
 //动态添加路由
 export function addStatic(data){
@@ -56,53 +54,7 @@ export function recursion(arr){
 export const loadView=(view)=>{
   return ()=>import('/src/views/'+view+'.vue')
  }
- //获取文章id
- const getAIds=async()=>{
-  let ids=localStorage.getItem('aids');
-  if(ids==undefined||ids==null){
-    const res=await getPublishedIds();
-    if(res.code==200){
-      ids=res.data;
-      }
-      localStorage.setItem('aids',JSON.stringify(ids));
-    }
-    if(ids){
-      for (let i of ids){
-        const route={
-          name:`article${i}`,
-          path:`/article${i}`,
-          component:loadArticle(i)
-        }
-        router.addRoute(route);
-      }
-  }
 
-}
-//动态加载文章
-export const loadArticle=(id)=>{
-  return ()=>import('../components/articles/article'+id+'.vue');
-}
-//获取用户id并加载路由
-const getUserIds=async ()=>{
-  const res=await getRegisterUserId();
-  if(res.code==200){
-    const uids=res.data;
-    if(uids&&uids instanceof Array){
-      for (let i of uids){
-      const route={
-        name:`userHome${i}`,
-        path:`/userHome${i}`,
-        component:loadUserHome(i)
-      }
-      router.addRoute(route);
-    }
-    }
-  }
-}
-//动态加载用户主页
-const loadUserHome=(id)=>{
-  return ()=>import('../components/userHome/userHome'+id+'.vue')
-}
 async function menuList1(){
   const json=localStorage.getItem('routeList');
   if(json){
@@ -129,24 +81,17 @@ const flag=localStorage.getItem('token');
     if(flag!=null){
       await menuList1();
     }
-    await getAIds();
-    await getUserIds();
 router.beforeEach(async(to,from,next)=>{
-  console.log(to);
   if(to.path=='/login'){
     next();
   }else if(to.path=='/register'){
     next();
   }else if(to.path=='/home'){
-    getAIds();
-    getUserIds();
     next();
   }else{
     const flag=localStorage.getItem('token');
     if(flag!=null){
-      menuList1();
-      getAIds();
-      getUserIds();
+      menuList1()
       next();
     }else{
       if(to.path.indexOf('/article')!=-1){

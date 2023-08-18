@@ -29,6 +29,16 @@ export const constantRoutes=[
     name:'register',
     component:()=>import('../views/Register.vue')
   },
+  {
+    path:'/article',
+    name:"article",
+    component:()=>import("../components/articles/Article.vue")
+  },
+  {
+    path:'/userHome',
+    name:"userHome",
+    component:()=>import("../components/userHome/userHome.vue")
+  }
 ];
 //创建路由
 const router = createRouter({

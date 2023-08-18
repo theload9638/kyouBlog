@@ -30,13 +30,13 @@
 <script>
 import { defineComponent,onBeforeMount,reactive,ref} from 'vue'
 import emoji from '../../public/emoji';
-import { UToast, createObjectURL } from 'undraw-ui'
+// import { UToast, createObjectURL } from 'undraw-ui'
 import { ElMessage } from 'element-plus'
 import {htmlToText,
     likeArticle,
     getArticleInfo
 } from '@/api/back/article.js'
-import moment from 'moment';
+// import moment from 'moment';
 import {getUserInfo} from '@/api/back/user.js'
 import {addComment,
     showComments,getUserCommentInfo
@@ -147,13 +147,12 @@ getCurInfo(uid.value);
     const getCommentList=()=>{
         showComments(articleId).then(rs=>{
             if(rs.code==200){
-                        config.comments= handleData(rs.data);
-                    }else{
-                        ElMessage.error(rs.msg);
-                    }
+               config.comments= handleData(rs.data);
+            }else{
+               ElMessage.error(rs.msg);
+            }
         })
     }
-    
     //处理评论数据
     const handleData=(data)=>{
         if(data && data instanceof Array&&data.length>0){

@@ -119,13 +119,13 @@ import {searchArticle} from '@/api/back/article'
 export default defineComponent({
     name:'HomeShow',
     setup(){
-  //前往用户主页
+  //前往用户主页 data = userId
   const goUserHome=(data)=>{
-    router.push({path:'/userHome'+data});
+    router.push({path:'/userHome',query:{'id':data}});
   }    
 //显示文章详情页
 const goArticleInfo=(id)=>{
-  router.push({path:'/article'+id});
+  router.push({path:'/article',query:{'id':id}});
 }     
 //本站介绍
 const introduce='kyou博客，个人程序。为了打发无聊时光和巩固知识而制作';

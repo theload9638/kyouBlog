@@ -128,12 +128,13 @@ public class ArticleController extends BaseController{
             Long id = article.getId();
             categoryService.addArticleCategories(id, articleDto.getCategoryIds());
         }
-        if (StatusConstant.PUBLISHED==article.getStatus()) {
-            //发布的文章，此时生成磁盘文件
-            threadService.generateArticle(article.getId(),
-                    article.getTitle(),
-                    ccProperties.getFreemarkerOutput());
-        }
+        //不再生成模板文件，已采用 数据复制 代替 冗余文件
+//        if (StatusConstant.PUBLISHED==article.getStatus()) {
+//            //发布的文章，此时生成磁盘文件
+//            threadService.generateArticle(article.getId(),
+//                    article.getTitle(),
+//                    ccProperties.getFreemarkerOutput());
+//        }
         clearCache();
         return Result.success(article.getId());
     }
@@ -260,7 +261,8 @@ public class ArticleController extends BaseController{
         if (article.getStatus().equals(StatusConstant.UNDER_REVIEW)) {
             article.setStatus(StatusConstant.PUBLISHED);
             articleService.updateById(article);
-            threadService.generateArticle(id,article.getTitle(),ccProperties.getFreemarkerOutput());
+            //不再生成模板文件，已采用 数据复制 代替 冗余文件
+//            threadService.generateArticle(id,article.getTitle(),ccProperties.getFreemarkerOutput());
            clearCache();
             return Result.success();
         } else {
@@ -288,8 +290,9 @@ public class ArticleController extends BaseController{
             article.setStatus(StatusConstant.TAKE_DOWN);
             articleService.updateById(article);
             //下架后删除对应的磁盘文件
-            String path=String.format("%s\\%s%s%s",ccProperties.getFreemarkerOutput(),"article",id,".vue");
-            WebUtil.delExistsFile(path);
+            //因为不采用 文件复制 所以 不用
+//            String path=String.format("%s\\%s%s%s",ccProperties.getFreemarkerOutput(),"article",id,".vue");
+//            WebUtil.delExistsFile(path);
             clearCache();
             return Result.success();
         }
@@ -306,13 +309,14 @@ public class ArticleController extends BaseController{
             return Result.success();
         }
         articleService.removeByIds(ids);
-        ids.forEach(id->{
-            //删除对应的磁盘文件
-            String path=String.format("%s\\%s%s%s",
-                    ccProperties.getFreemarkerOutput(),
-                    "article",id,".vue");
-            WebUtil.delExistsFile(path);
-        });
+        //因为不采用 文件复制 所以 不用
+//        ids.forEach(id->{
+//            //删除对应的磁盘文件
+//            String path=String.format("%s\\%s%s%s",
+//                    ccProperties.getFreemarkerOutput(),
+//                    "article",id,".vue");
+//            WebUtil.delExistsFile(path);
+//        });
         //删除所有对应的评论
         commentsService.removeByAIds(ids);
         clearCache();

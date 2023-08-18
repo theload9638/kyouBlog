@@ -64,18 +64,18 @@
 
 <script>
     import router from '@/router'
-    import { defineComponent,ref ,onMounted} from 'vue'
+    import { defineComponent,ref ,onBeforeMount} from 'vue'
     import {getAuthorArticles} from '@/api/back/article.js'
     import {getAuthorInfo,getUserInfo,follow} from '@/api/back/user'
     export default defineComponent({
-        name:'userHome3',
+        name:'userHome',
         setup() {
             //退出
             const back=()=>{
                 router.back();
             }
             //作者id
-            const authorId=3;
+            const authorId=ref(undefined);
             //文章列表
             const articleList=ref([]);
             //文章数
@@ -87,7 +87,7 @@
             })
             //获取文章列表
             const getData=()=>{
-                getAuthorArticles(authorId,pages.value.pageNum,pages.value.pageSize).
+                getAuthorArticles(authorId.value,pages.value.pageNum,pages.value.pageSize).
                 then(res=>{
                     if(res.code==200){
                         total.value=res.data.total;
@@ -131,7 +131,7 @@
                 //false是未关注，true是已关注
                 const flag=followStatus.value?1:0;
                 const uf={
-                    curId:authorId,
+                    curId:authorId.value,
                     fansId:uid.value
                 }
                 follow(uf,flag);
@@ -155,19 +155,26 @@
             })
             //获取作者信息和判断是否关注
             const getUserData=()=>{
-                getAuthorInfo(authorId).then(res=>{
+                getAuthorInfo(authorId.value).then(res=>{
                     if(res.code==200){
                         followStatus.value=(res.data.fansIds.includes(uid.value))
                         userInfo.value=res.data;
                     }
                 })
             }
-            onMounted(()=>{
-                checkLogin();
+            onBeforeMount(()=>{
+                const query=router.currentRoute._value.query;
+                if(Object.keys(query)){
+                    const userId=query.id;
+                    authorId.value=userId;
+                    checkLogin();
+                }else{
+                    router.push('/');
+                }
             })
             //显示文章详情页
             const goArticleInfo=(id)=>{
-                router.push({path:'/article'+id});
+                router.push({path:'/article',query:{'id':id}});
             }
             return {
                 back,articleList,goArticleInfo,pages,total,

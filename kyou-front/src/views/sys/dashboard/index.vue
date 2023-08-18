@@ -95,7 +95,7 @@ export default defineComponent({
         getInfo();
       })
       const goHomeLink=(id)=>{
-        router.push({path:'/userHome'+id});
+        router.push({path:'/userHome',query:{'id':id}});
       }
       const showData=ref({})
         const goLink=(path)=>{
