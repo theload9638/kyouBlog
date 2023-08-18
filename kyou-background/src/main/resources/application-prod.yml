@@ -1,0 +1,102 @@
+cc:
+  config:
+    #白名单
+    ignoreUrls:
+      - /swagger-ui.html/**
+      - /swagger-resources/**
+      - /**/v2/**
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/**
+      - /*/api-docs
+      - /error
+      - /doc.html
+      - /sys/user/login
+      - /sys/user/loginCode
+      - /sys/menu/getMenus
+      - /sys/user/register
+      - /sys/user/exit
+      - /sys/article/likeArticle/*
+      - /sys/article/getInfo/*
+      - /sys/article/tagAndCategory/*
+      - /sys/index/front
+      - /sys/article/getPublishedIds
+      - /sys/article/authorArticles/**
+      - /sys/article/info/*
+      - /sys/user/getAuthorInfo/*
+      - /sys/user/registeredID
+      - /sys/article/timeLine
+      - /sys/user/authorInfo/*
+      - /sys/article/top10Article
+      - /sys/article/searchArticle
+      - /*.html
+      - /profile/**
+    tokenExpire: 120
+    tokenSecret: kyou-secret
+    rememberMe: 2880
+    #freemarker 的输出路径：文章和用户
+    freemarkerOutput: D:\JAVA\notes\temp\my-webLog\kyouBlog\kyou-front\src\components\articles
+    freemarkerUserHomeOutPut: D:\JAVA\notes\temp\my-webLog\kyouBlog\kyou-front\src\components\userHome
+
+spring:
+  datasource: #mysql数据库
+    url: jdbc:mysql://localhost:3310/weblog?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    username: root
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  freemarker:
+    cache: false
+    charset: UTF-8
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+    check-template-location: true
+  redis: #缓存层
+    database: 0
+    password: root
+    host: localhost
+    port: 6379
+    timeout: 30000ms  #连接超时时间 30秒
+    lettuce:
+      pool:
+        max-wait: 100 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-active: 8  # 连接池最大连接数（使用负值表示没有限制）
+        min-idle: 0  # 连接池中的最小空闲连接
+        max-idle: 8 # 连接池中的最大空闲连接
+  cache:
+    redis:
+      time-to-live: 1800000
+
+
+dubbo:
+  application:
+    name: kyou-background #客户端应用名称
+  registry:
+    address: zookeeper://localhost:2181 #注册中心地址
+    protocol: zookeeper #注册中心协议
+  protocol:
+    name: dubbo #协议名称
+    port: 20887
+  scan:
+    base-packages: com.kyou.blog.background.web #扫描的服务包
+  consumer:
+    timeout: 30000 #客户端调用远程服务的超时时间 ms
+    retries: 0
+    check: false #服务检查是否可用(默认true) 若false则当远程服务提供者离线时，仍会发送请求给它
+#自定义属性
+minio:
+  bucket: kkk #桶名称
+  url: http://118.31.5.85:9000 #Linux的ip+minio开放的端口
+  username: minio
+  password: minio123
+  enabled: true  #开启minio工具
+
+
+
+
+

@@ -24,8 +24,10 @@ export default defineConfig({
       promiseExportName: '__tla',
       // The function to generate import names of top-level await promise in each chunk module
       promiseImportName: i => `__tla_${i}`
-    })
+    }),
+    
   ],
+  base:'./',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

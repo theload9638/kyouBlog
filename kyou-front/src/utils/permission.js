@@ -4,22 +4,6 @@ import {getPublishedIds} from '@/api/back/article'
 import {getRegisterUserId } from '@/api/back/user'
 
 //动态添加路由
-export function addDynamicRoutes(data){
-  if(data instanceof Array){
-    let routes=[];
-    data.forEach(item=>{
-      const route ={
-        name:item.name,
-        path:`/${item.path}`,
-        component:()=>import('@/views/background/BackHome.vue'),
-        children:[]
-      };
-      findChilren(item,route,item.children);
-      routes.push(route);
-    })
-    return routes;
-  }
-}
 export function addStatic(data){
   if(data instanceof Array){
     let routes=[];
@@ -59,24 +43,6 @@ function getChilren(parent,parRoute,data){
      })
   }
 }
-//给父路由找子路由
-function findChilren(item,par,data){
-   if(item!=null&&item!=undefined&&par!=null&&par!=undefined&&data!=null&&data instanceof Array&&data.length>0){
-    //找出所有子菜单  
-    data.filter(i=>i.type==='C').forEach(i=>{
-          if(i&&item&&i.parentId==item.id){
-            const route ={
-              name:i.name,
-              path:i.path,
-              component:()=>import(`@/views/${i.component}.vue`),
-              children:[]
-            };
-            findChilren(i,route,i.children);
-            par.children.push(route);
-          }
-      })
-   }
-}
 //递归添加组件
 export function recursion(arr){
   if(arr&&arr instanceof Array&&arr.length>0){
@@ -88,7 +54,7 @@ export function recursion(arr){
 }
 //动态加载组件
 export const loadView=(view)=>{
-  return ()=>import('../views/'+view+'.vue')
+  return ()=>import('/src/views/'+view+'.vue')
  }
  //获取文章id
  const getAIds=async()=>{
@@ -166,6 +132,7 @@ const flag=localStorage.getItem('token');
     await getAIds();
     await getUserIds();
 router.beforeEach(async(to,from,next)=>{
+  console.log(to);
   if(to.path=='/login'){
     next();
   }else if(to.path=='/register'){

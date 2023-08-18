@@ -140,7 +140,8 @@ const handleCommand = (command) => {
         }
       })
     }else if(command=='info'){
-      router.push('/menuBoard/dashboard')
+      // router.push('/menuBoard/dashboard')
+      router.push('/back')
     }else if(command=='signIn'){
       router.push("/sign");
     }

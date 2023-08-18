@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 02/08/2023 15:56:57
+ Date: 17/08/2023 19:41:21
 */
 
 SET NAMES utf8mb4;
@@ -39,16 +39,17 @@ CREATE TABLE `article`  (
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新者',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (1, 1, '测试文章2', 'test111\n\n', 4, 1, 0, 1, 3, 10, 'test111\n\n', 'http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg', '2023-07-26 12:03:47', '1', 'null', '2023-08-02 15:00:00');
-INSERT INTO `article` VALUES (2, 1, '测试文章1', '<p data-v-md-line=\"1\">test</p>\n', 5, 0, 0, 1, 3, 10, 'test\n\n', '', '2023-07-26 13:16:46', '1', 'null', '2023-08-02 15:00:00');
-INSERT INTO `article` VALUES (3, 1, '留言板', '<p data-v-md-line=\"1\">一些优秀的留言</p>\n', 4, 6, 3, 1, 1, 10, '一些优秀的留言', NULL, '2023-07-27 19:09:52', '1', 'null', '2023-08-02 15:00:00');
-INSERT INTO `article` VALUES (4, 3, '测试博客', 'cetset1', 2, 0, 1, 1, 3, 10, 'cetset1', '', '2023-07-31 21:22:28', '3', 'null', '2023-08-02 15:00:00');
+INSERT INTO `article` VALUES (1, 1, '测试文章2', 'test111\n\n', 4, 1, 0, 1, 3, 10, 'test111\n\n', 'http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg', '2023-07-26 12:03:47', '1', 'null', '2023-08-17 19:40:00');
+INSERT INTO `article` VALUES (2, 1, '测试文章1', '<p data-v-md-line=\"1\">test</p>\n', 5, 1, 0, 1, 3, 10, 'test\n\n', '', '2023-07-26 13:16:46', '1', 'null', '2023-08-17 19:40:00');
+INSERT INTO `article` VALUES (3, 1, '留言板', '<p data-v-md-line=\"1\">一些优秀的留言</p>\n', 6, 6, 3, 1, 1, 10, '一些优秀的留言', NULL, '2023-07-27 19:09:52', '1', 'null', '2023-08-17 19:40:00');
+INSERT INTO `article` VALUES (4, 3, '测试博客', 'cetset1', 3, 0, 1, 1, 3, 10, 'cetset1', '', '2023-07-31 21:22:28', '3', 'null', '2023-08-17 19:40:00');
 INSERT INTO `article` VALUES (5, 3, '测试文章啊', '啊倒萨', 0, 0, 0, 1, 0, 10, '啊倒萨', 'http://kyou:9000/kkk/b7ec79e388de4757a6e6a6c061fe771a.jpg', '2023-07-31 21:31:29', '3', '1', '2023-07-31 22:10:07');
+INSERT INTO `article` VALUES (6, 1, '又是一篇测试文章', '刷数据', 1, 0, 1, 1, 3, 10, '刷数据', '', '2023-08-03 15:34:01', '1', 'null', '2023-08-17 19:40:00');
 
 -- ----------------------------
 -- Table structure for article_category
@@ -84,7 +85,7 @@ CREATE TABLE `article_tag`  (
   `aid` bigint(0) NULL DEFAULT NULL COMMENT '文章id',
   `tid` bigint(0) NULL DEFAULT NULL COMMENT '标签id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章标签表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章标签表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of article_tag
@@ -95,6 +96,7 @@ INSERT INTO `article_tag` VALUES (8, 1, 5);
 INSERT INTO `article_tag` VALUES (9, 3, 9);
 INSERT INTO `article_tag` VALUES (10, 3, 10);
 INSERT INTO `article_tag` VALUES (11, 5, 10);
+INSERT INTO `article_tag` VALUES (12, 6, 10);
 
 -- ----------------------------
 -- Table structure for category
@@ -143,7 +145,7 @@ CREATE TABLE `comments`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '评论时间',
   `likes` bigint(0) NULL DEFAULT 0 COMMENT '评论点赞数',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
@@ -327,20 +329,11 @@ CREATE TABLE `role_menu`  (
   `rid` bigint(0) NOT NULL COMMENT '角色id',
   `mid` bigint(0) NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 268 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色菜单关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 277 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色菜单关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (1, 6, 1);
-INSERT INTO `role_menu` VALUES (2, 6, 5);
-INSERT INTO `role_menu` VALUES (3, 6, 21);
-INSERT INTO `role_menu` VALUES (4, 6, 22);
-INSERT INTO `role_menu` VALUES (5, 6, 23);
-INSERT INTO `role_menu` VALUES (6, 6, 24);
-INSERT INTO `role_menu` VALUES (7, 6, 6);
-INSERT INTO `role_menu` VALUES (8, 6, 19);
-INSERT INTO `role_menu` VALUES (9, 6, 20);
 INSERT INTO `role_menu` VALUES (94, 2, 1);
 INSERT INTO `role_menu` VALUES (95, 2, 5);
 INSERT INTO `role_menu` VALUES (96, 2, 21);
@@ -406,6 +399,15 @@ INSERT INTO `role_menu` VALUES (265, 4, 3);
 INSERT INTO `role_menu` VALUES (266, 4, 14);
 INSERT INTO `role_menu` VALUES (267, 4, 29);
 INSERT INTO `role_menu` VALUES (268, 4, 30);
+INSERT INTO `role_menu` VALUES (269, 6, 1);
+INSERT INTO `role_menu` VALUES (270, 6, 5);
+INSERT INTO `role_menu` VALUES (271, 6, 21);
+INSERT INTO `role_menu` VALUES (272, 6, 22);
+INSERT INTO `role_menu` VALUES (273, 6, 23);
+INSERT INTO `role_menu` VALUES (274, 6, 24);
+INSERT INTO `role_menu` VALUES (275, 6, 6);
+INSERT INTO `role_menu` VALUES (276, 6, 20);
+INSERT INTO `role_menu` VALUES (277, 6, 14);
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -444,6 +446,10 @@ INSERT INTO `sys_log` VALUES (1686023911708844034, 'test1', '/sys/comments', 'IN
 INSERT INTO `sys_log` VALUES (1686381266430648322, 'admin', '/sys/user', 'UPDATE', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.UserController.saveUser(UserDto)', '[UserDto(id=2, email=2485119372@qq.com, username=commonUser, gender=1, nickname=null, headImage=http://kyou:9000/kkk/8f471cdf6df64c9f969e9e6b19b7ed27.jpg, remark=一名普通的用户, delFlag=null, status=null, roles=[普通用户, 审核员])]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '用户模块', '2023-08-02 00:29:22');
 INSERT INTO `sys_log` VALUES (1686381266430648323, 'admin', '/sys/menu/assignPerms/4', 'UPDATE', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.MenuController.assign(Long,List)', '[4, [1, 5, 21, 6, 54, 55, 20, 2, 7, 57, 58, 8, 9, 52, 10, 45, 47, 48, 11, 3, 14, 29, 30]]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '菜单模块', '2023-08-02 00:29:25');
 INSERT INTO `sys_log` VALUES (1686642991058919426, 'admin', '/sys/comments', 'INSERT', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.CommentsController.addComment(Map,HttpServletRequest)', '[{parentId=null, pname=null, uid=1, address=Chromium, content=6, likes=0, createTime=2023-08-02 15:32:29, articleId=2, user={username=kyou, avatar=http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg, level=6, homeLink=/1}}, SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@230a0f6d]]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '评论模块', '2023-08-02 15:32:29');
+INSERT INTO `sys_log` VALUES (1687005378849071106, 'admin', '/sys/article/addArticle', 'INSERT', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.ArticleController.addArticle(ArticleDto)', '[ArticleDto(id=null, title=又是一篇测试文章, content=刷数据, status=2, isComment=true, thumbnail=, summary=刷数据, categoryIds=[], tags=[thinking], viewCount=null, commentCount=null, likeCount=null, likeStatus=null)]', '{\"data\":6,\"msg\":\"成功\",\"code\":200}', '文章模块', '2023-08-03 15:34:01');
+INSERT INTO `sys_log` VALUES (1687005378849071107, 'admin', '/sys/article/valid/6', 'UPDATE', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.ArticleController.validArticle(Long)', '[6]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '文章模块', '2023-08-03 15:34:09');
+INSERT INTO `sys_log` VALUES (1688464996683022338, 'admin', '/sys/tag', 'INSERT', '0:0:0:0:0:0:0:1', 0, 'Result com.kyou.blog.background.web.TagController.addTag(String)', '[security]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '标签模块', '2023-08-07 16:17:12');
+INSERT INTO `sys_log` VALUES (1689443947572199426, 'admin', '/sys/menu/assignPerms/6', 'UPDATE', '127.0.0.1', 0, 'Result com.kyou.blog.background.web.MenuController.assign(Long,List)', '[6, [1, 5, 21, 22, 23, 24, 6, 20, 14]]', '{\"data\":\"\",\"msg\":\"成功\",\"code\":200}', '菜单模块', '2023-08-10 09:09:57');
 
 -- ----------------------------
 -- Table structure for tag
@@ -453,7 +459,7 @@ CREATE TABLE `tag`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '标签id',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '标签表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '标签表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tag
@@ -468,6 +474,7 @@ INSERT INTO `tag` VALUES (7, 'rust');
 INSERT INTO `tag` VALUES (8, 'mybatis');
 INSERT INTO `tag` VALUES (9, 'life');
 INSERT INTO `tag` VALUES (10, 'thinking');
+INSERT INTO `tag` VALUES (11, 'security');
 
 -- ----------------------------
 -- Table structure for user
@@ -495,8 +502,8 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '$2a$10$RoIQHqASHRkV1yL4L3t2teDqtvaF77oD3yy8iU9.G1EL3nvDugXWK', '2967861744@qq.com', '1', 'kyou', 'http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg', '超级管理员', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-14 09:51:07', '0', '1', '2023-08-01 22:14:53');
-INSERT INTO `user` VALUES (2, 'commonUser', '$2a$10$dBoIVVOjY4TqqWKJr0bmoOoH0oo/TJNojqO4ExJQC94dGGFFipdsi', '2498339372@qq.com', '1', NULL, 'http://kyou:9000/kkk/8f471cdf6df64c9f969e9e6b19b7ed27.jpg', '一名普通的用户', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:01:08', '1', '2', '2023-08-01 22:17:09');
+INSERT INTO `user` VALUES (1, 'admin', '$2a$10$RoIQHqASHRkV1yL4L3t2teDqtvaF77oD3yy8iU9.G1EL3nvDugXWK', '2967861744@qq.com', '1', 'kyou', 'http://kyou:9000/kkk/119954f26bf246ba99a6cfba6f39b7bc.jpg', '超级管理员', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-14 09:51:07', '0', '1', '2023-08-07 17:45:29');
+INSERT INTO `user` VALUES (2, 'commonUser', '$2a$10$dBoIVVOjY4TqqWKJr0bmoOoH0oo/TJNojqO4ExJQC94dGGFFipdsi', '2485119372@qq.com', '1', NULL, 'http://kyou:9000/kkk/8f471cdf6df64c9f969e9e6b19b7ed27.jpg', '一名普通的用户', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:01:08', '1', '2', '2023-08-01 22:17:09');
 INSERT INTO `user` VALUES (3, 'test1', '$2a$10$NeVEzQAJQZIThgxn7LmXpOOX0zmHfDOwtOvftlOPt5CwzjbvvXyhi', 'asx123@123.com', '1', '我的新名字', 'https://static.juzicon.com/avatars/avatar-200602130320-HMR2.jpeg?x-oss-process=image/resize,w_100', '只是一个普普通通的测试用户罢了', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-20 09:20:05', '1', '3', '2023-08-01 08:58:19');
 INSERT INTO `user` VALUES (4, 'test2', '$2a$10$FlwHtD7gPRp8rA9kHiGjveaAYwKooDRPHkuXvEj2aB6OST.C5olUq', 'test2@123.com', '1', '测试用户2', NULL, '测试用户2', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-21 01:11:24', '1', '4', '2023-07-22 09:34:18');
 INSERT INTO `user` VALUES (5, 'test3', '$2a$10$gooI8kcuSgiJLHQZ4s54e.yeo1wGIORASk5WTm89KZHzYR4Uh1i.S', 'test3@123.com', '1', '测试拥护3', NULL, '测试', '0', 0, '0:0:0:0:0:0:0:1', '2023-07-21 01:12:44', '1', '5', '2023-07-22 09:00:27');
@@ -536,6 +543,7 @@ CREATE TABLE `user_follow`  (
 -- Records of user_follow
 -- ----------------------------
 INSERT INTO `user_follow` VALUES (1, 3);
+INSERT INTO `user_follow` VALUES (3, 1);
 
 -- ----------------------------
 -- Table structure for user_role

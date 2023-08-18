@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory ,createWebHashHistory} from 'vue-router'
 //公共路由
 export const constantRoutes=[
   {
@@ -33,6 +33,7 @@ export const constantRoutes=[
 //创建路由
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  // history:createWebHashHistory(import.meta.env.BASE_URL),
   routes:constantRoutes
 })
 // 保存原始的push方法
