@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory ,createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHistory} from 'vue-router'
 //公共路由
 export const constantRoutes=[
   {

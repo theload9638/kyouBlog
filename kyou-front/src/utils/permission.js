@@ -1,5 +1,9 @@
 import { menuList } from '@/api/back/menu'
 import router from '@/router';
+const module1 = import.meta.glob('../views/**.vue')
+const module2 = import.meta.glob('../views/**/**.vue')
+const module3 = import.meta.glob('../views/**/**/**.vue')
+
 
 //动态添加路由
 export function addStatic(data){
@@ -52,7 +56,19 @@ export function recursion(arr){
 }
 //动态加载组件
 export const loadView=(view)=>{
-  return ()=>import('/src/views/'+view+'.vue')
+  // return ()=>import('/src/views/'+view+'.vue')
+  const n=`../views/${view}.vue`;
+  const m1=module1[n];
+  if(!m1){
+    const m2=module2[n];
+    if(!m2){
+    return m2;
+   }else{
+    return module3[n];
+   }
+  }else{
+    return m1;
+  }
  }
 
 async function menuList1(){
