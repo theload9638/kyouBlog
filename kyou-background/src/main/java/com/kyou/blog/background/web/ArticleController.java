@@ -536,7 +536,6 @@ public class ArticleController extends BaseController{
     }
 
     public void clearCache(){
-        redisUtil.del(RedisConstant.USER_LIST);
         redisUtil.delBatch(RedisConstant.USER_INFO+"*");
         redisUtil.del(RedisConstant.KYOU_FRONT);
         redisUtil.del(RedisConstant.KYOU_FRONT);

@@ -49,11 +49,12 @@ const submitForm = async (formEl) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-        if (!/^\w{6,16}$/.test(curPwd)) {
+        if (!/^\w{6,16}$/.test(info.value.curPwd)) {
             ElMessage.error('密码长度在6到16位')
         return;
       } 
-      if (!/^\w{6,16}$/.test(nextPwd) && !/^\w{6,16}$/.test(checkPwd) &&checkPwd!=nextPwd) {
+      if (!/^\w{6,16}$/.test(info.value.nextPwd) &&
+       !/^\w{6,16}$/.test(info.value.checkPwd) &&info.value.checkPwd!=info.value.nextPwd) {
             ElMessage.error('密码长度在6到16位，密码不一致')
         return;
       } 

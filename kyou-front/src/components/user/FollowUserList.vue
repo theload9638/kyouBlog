@@ -24,7 +24,7 @@ import { ref,onMounted } from 'vue'
 import {getFollowList,follow} from '@/api/back/user'
 import router from '@/router';
 const goHomeLink=(id)=>{
-    router.push({path:'/userHome'+id})
+  router.push({path:'/userHome',query:{'id':id}});
 }
 onMounted(()=>{
   getList();

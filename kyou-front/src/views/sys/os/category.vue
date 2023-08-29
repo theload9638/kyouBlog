@@ -122,7 +122,7 @@ export default defineComponent({
                 ElMessage.error('不能删除带有子分类的数据');
                 return;
             }
-            delCategory().then(res=>{
+            delCategory(row.id).then(res=>{
                 if(res.code!=200){
                     ElMessage.error(res.msg);
                 }

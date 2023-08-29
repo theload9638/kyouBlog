@@ -173,7 +173,9 @@ const getUserList=(data)=>{
   }else{
     data=defaultQueryParam.value;
   }
+  console.log(data)
   listUsers(data).then(res=>{
+    
     total.value=res.data.total;
     tableData.value=res.data.records;
   })

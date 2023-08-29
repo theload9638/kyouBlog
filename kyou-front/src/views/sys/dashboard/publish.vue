@@ -16,7 +16,7 @@
         是否开启评论：<el-switch v-model="openComment" size="large"/>   
     <el-button type="primary" class="fbn" @click="publish">发布文章</el-button>
     <el-button type="primary" @click="saveBase">保存草稿</el-button>
-    <el-button type="primary" @click="reset"><el-icon><Refresh /></el-icon>重置</el-button>
+    <!-- <el-button type="primary" @click="reset"><el-icon><Refresh /></el-icon>重置</el-button> -->
       </el-collapse-item>
       <!-- 分类目录 -->
       <el-collapse-item name="2">

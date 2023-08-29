@@ -4,6 +4,8 @@ package com.kyou.blog.background.web;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kyou.blog.background.properties.CCProperties;
+import com.kyou.blog.background.security.AuthHandler;
+import com.kyou.blog.background.security.SysUser;
 import com.kyou.blog.background.webUtil.AuthenticationContextHolder;
 import com.kyou.blog.background.webUtil.RedisUtil;
 import com.kyou.blog.background.webUtil.ThreadService;
@@ -230,11 +232,13 @@ public class UserController extends BaseController{
         User u = userService.getOne(
                 new LambdaQueryWrapper<User>()
                         .eq(User::getId, userId)
-                        .eq(User::getPassword, passwordEncoder.encode(dto.getCurPwd()))
                         .eq(User::getStatus, StatusConstant.ENABLED)
                         .eq(User::getDelFlag,StatusConstant.EXISTS)
         );
         if(u==null){
+            return Result.clientError(MsgConstant.INPUT_PWD_ERR);
+        }
+        if (!passwordEncoder.matches(dto.getCurPwd(), u.getPassword())) {
             return Result.clientError(MsgConstant.INPUT_PWD_ERR);
         }
         if (!dto.getNextPwd().equals(dto.getCheckPwd())) {
@@ -245,9 +249,9 @@ public class UserController extends BaseController{
         user.setPassword(passwordEncoder.encode(dto.getNextPwd()));
         boolean b = userService.updateById(user);
         if (b) {
+            redisUtil.del(RedisConstant.USER_INFO+user.getId());
             return Result.success();
         }
-        redisUtil.del(RedisConstant.USER_INFO+user.getId());
         return Result.clientError(MsgConstant.DATA_ERR);
     }
 
@@ -256,12 +260,7 @@ public class UserController extends BaseController{
     @PreAuthorize("@auth.hasPerms('user:userInfo:select')")
     public Result<PageVo<UserVo>> listUsers(@Valid PageUserDto query)
     {
-        String val = redisUtil.getVal(RedisConstant.USER_LIST);
-        if (StringUtils.hasText(val)) {
-            return Result.success(JSONUtil.toBean(val,PageVo.class));
-        }
         PageVo<UserVo> list= userService.listWithRoles(query);
-        redisUtil.setVal(RedisConstant.USER_LIST,list,Duration.ofMinutes(30));
         return Result.success(list);
     }
     @ApiOperation("修改用户账号是否启用状态/是否激活状态")
@@ -275,12 +274,13 @@ public class UserController extends BaseController{
                                  @PathVariable
                                  @NotNull(message = MsgConstant.ACTIVATION_STATUS_ERR) String delFlag)
     {
-        if(id.equals("1")){
-            return Result.serverError("无法修改超级管理员");
-        }
         User user = userService.getById(id);
         if (user == null) {
             return Result.serverError(MsgConstant.USER_NO_EXIST);
+        }
+        List<Role> roles = roleService.getRolesByUId(id);
+        if (WebUtil.checkAdmin(id,roles)) {
+            return Result.serverError("无法修改超级管理员");
         }
         if (user.getStatus().equals(status)) {
             //表示修改激活状态
@@ -627,7 +627,6 @@ public class UserController extends BaseController{
 
 
     public void clearUserCache(){
-        redisUtil.del(RedisConstant.USER_LIST);
         redisUtil.delBatch(RedisConstant.USER_INFO+"*");
         redisUtil.del(RedisConstant.KYOU_FRONT);
         redisUtil.del(RedisConstant.KYOU_FRONT);

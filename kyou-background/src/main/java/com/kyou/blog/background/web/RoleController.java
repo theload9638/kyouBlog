@@ -3,6 +3,7 @@ package com.kyou.blog.background.web;
 
 import cn.hutool.json.JSONUtil;
 
+import com.kyou.blog.background.webUtil.WebUtil;
 import com.kyou.blog.common.Result;
 import com.kyou.blog.common.annotation.Log;
 import com.kyou.blog.common.constant.RedisConstant;
@@ -52,6 +53,9 @@ public class RoleController extends BaseController{
     @Log(value = OperationType.DELETE,title = "角色模块")
     @PreAuthorize("@auth.hasPerms('setting:role:remove')")
     public Result del(@PathVariable @Min(value = 0,message = "编号不能为负数") Long id){
+        if(id==1){
+            return Result.serverError("无法删除超级管理员");
+        }
         roleService.removeById(id);
         clearRoleCache();
         return Result.success();

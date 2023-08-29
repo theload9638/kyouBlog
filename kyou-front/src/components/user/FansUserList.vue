@@ -20,7 +20,7 @@ import {getFansList} from '@/api/back/user'
 import { ElMessage } from 'element-plus'
 import router from '@/router';
 const goHomeLink=(id)=>{
-    router.push({path:'/userHome'+id})
+  router.push({path:'/userHome',query:{'id':id}});
 }
  const listV=ref([])
 onMounted(()=>{
