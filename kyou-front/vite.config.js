@@ -9,7 +9,9 @@ import topLevelAwait from 'vite-plugin-top-level-await'
 
 let domain='http://localhost:8002/'
 export default defineConfig({
-  
+  build: {
+    sourcemap: true,
+  },
   plugins: [
     vue(),
     AutoImport({
