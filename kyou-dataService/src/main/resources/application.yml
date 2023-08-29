@@ -1,7 +1,7 @@
 
 spring:
   profiles:
-    default: prod
+    default: dev
   application:
     name: dataService
 
