@@ -67,14 +67,14 @@ public class TagController extends BaseController{
             if (Integer.parseInt(val)>=3) {
                 return Result.clientError("每天只能添加3个标签");
             }
+            Tag tag = new Tag();
+            tag.setName(name);
+            tagService.save(tag);
+            redisUtil.val().increment(key);
+            clearTagCache();
         }else{
             redisUtil.setVal(key,1);
         }
-        Tag tag = new Tag();
-        tag.setName(name);
-        tagService.save(tag);
-        redisUtil.val().increment(key);
-        clearTagCache();
         return Result.success();
     }
     public void clearTagCache(){
