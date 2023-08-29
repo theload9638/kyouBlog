@@ -39,13 +39,7 @@ public class RoleController extends BaseController{
     @GetMapping("/list")
     @PreAuthorize("@auth.authenticate()")
     public Result<List<Role>> list(String condition){
-        String val = redisUtil.getVal(RedisConstant.ALL_ROLES);
-        if (StringUtils.hasText(val)) {
-            List<Role> roles = JSONUtil.toList(val, Role.class);
-            return Result.success(roles);
-        }
         List<Role> list = roleService.listRoles(condition);
-        redisUtil.setVal(RedisConstant.ALL_ROLES, list, Duration.ofMinutes(RedisConstant.ALL_ROLES_TTL));
         return Result.success(list);
     }
     @DeleteMapping("/{id}")
@@ -92,7 +86,6 @@ public class RoleController extends BaseController{
     }
 
     public void clearRoleCache(){
-        redisUtil.del(RedisConstant.ALL_ROLES);
     }
 
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import java.time.Duration;
 import java.util.List;
 
 /**
@@ -35,10 +34,6 @@ public class SysLogController extends BaseController
     @PreAuthorize("@auth.authenticate()")
     @GetMapping("/list")
     public Result<PageVo<SysLog>> list(@Valid PageLogDto dto){
-        String val = redisUtil.getVal(RedisConstant.KYOU_LOG);
-        if (StringUtils.hasText(val)) {
-            return Result.success(JSONUtil.toBean(val,PageVo.class));
-        }
         LambdaQueryWrapper<SysLog> l = new LambdaQueryWrapper<>();
         if (StringUtils.hasText(dto.getUri())) {
            l.like(SysLog::getUri, dto.getUri());
@@ -57,7 +52,6 @@ public class SysLogController extends BaseController
         PageVo<SysLog> sysLogPageVo = new PageVo<>();
         sysLogPageVo.setTotal(page.getTotal());
         sysLogPageVo.setRecords(page.getRecords());
-        redisUtil.setVal(RedisConstant.KYOU_LOG,sysLogPageVo, Duration.ofMinutes(10));
         return Result.success(sysLogPageVo);
     }
 
@@ -79,7 +73,7 @@ public class SysLogController extends BaseController
     }
 
     public void clearLogCache(){
-        redisUtil.del(RedisConstant.KYOU_LOG);
+
     }
 
 }
