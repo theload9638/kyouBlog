@@ -102,7 +102,7 @@
               const likeAc=()=>{
                   isLike.value=!isLike.value;
                   let type=isLike.value?1:-1;
-                  likeArticle(articleId,uid.value,type).then(res=>{
+                  likeArticle(articleId.value,uid.value,type).then(res=>{
                       if(res.code!=200){
                           ElMessage.error(res.msg);
                       }else{
