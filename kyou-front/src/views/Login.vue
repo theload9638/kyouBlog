@@ -300,7 +300,7 @@ if (nameErr.value==''&&pwdErr.value==''&&codeErr.value==''
 
 .container {
   position: relative;
-  left:-100px;
+  left:0px;
   top:-60px;
   z-index: 1;
   width: 100%;
@@ -332,9 +332,9 @@ input[type="password"] {
 .verifyCodeImg {
   display: inline-block;
   vertical-align: middle;
-  height: 50px;
-  width: 170px;
-  margin-right: 7px;
+  height: 45px;
+  width: 150px;
+  margin-right: 6px;
   cursor: pointer; /* 鼠标移动到指针图像上时改变光标形状 */
 }
 
@@ -349,8 +349,8 @@ h1 {
 }
 
 form {
-  width: 470px;
-  height: 380px;
+  width: 460px;
+  height: 370px;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);

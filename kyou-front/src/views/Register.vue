@@ -103,16 +103,17 @@ const resetForm = (formEl) => {
   
   <style lang="css" scoped>
   .form-container {
+    background-color: antiquewhite;
     max-width: 600px;
     width: 500px;
     position: fixed;
-    left: 40%;
+    left: 38%;
     top:30%;
     height: 400px;
     margin: auto;
-    padding: 74px;
+    padding: 75px;
     border-radius: 14px;
-    background: linear-gradient(to bottom, #f7f8fb, #f1f2f6);
+    /* background: linear-gradient(to bottom, #f7f8fb, #f1f2f6); */
     box-shadow:
      -1px -1px 0 #e1e1e1,
       2px 2px 0 #ffffff,
@@ -125,11 +126,11 @@ const resetForm = (formEl) => {
     
   }
   .submit{
-    margin-left: 80px;
+    margin-left: 100px;
     margin-top:50px;
   }
   .reset{
-    margin-left: 40px;
+    margin-left: 51px;
   }
   .info{
     width: 100px;
