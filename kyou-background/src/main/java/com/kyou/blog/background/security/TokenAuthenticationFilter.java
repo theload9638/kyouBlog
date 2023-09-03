@@ -43,8 +43,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter implements S
     private UserService userService;
     @DubboReference(interfaceClass = MenuService.class)
     private MenuService menuService;
-    @Autowired
-    private RedisUtil redisUtil;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,

@@ -49,8 +49,6 @@ public class TaskConfig {
     private RedisUtil redisUtil;
     @DubboReference(interfaceClass = UserCommentService.class)
     private UserCommentService userCommentService;
-
-
     @DubboReference(interfaceClass = ArticleService.class)
     private ArticleService articleService;
     @DubboReference(interfaceClass = CommentsService.class)
