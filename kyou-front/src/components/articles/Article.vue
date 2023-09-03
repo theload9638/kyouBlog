@@ -160,11 +160,32 @@
                   if(Object.keys(query)){
                       const id=query.id;
                       articleId.value=id;
+                      buildNetEnvComment();
                       checkLoginAndShowComms();
                   }else{
                     router.push('/')
                   }
               })
+              const buildNetEnvComment=()=>{
+        const o = navigator.userAgentData;
+        if(!o){
+            const modifiedUserAgentData = {
+                     brands: [
+{brand: 'Chromium', version: '116'},      
+{brand: 'Not)A;Brand', version: '24'},
+{brand: 'Google Chrome', version: '116'}             
+            ],
+            mobile: false,
+            platform: "Windows"
+            };
+            // 重新设置浏览器的 User Agent 数据
+Object.defineProperty(navigator, 'userAgentData', {
+  value: modifiedUserAgentData,
+  configurable: true,
+  enumerable: true,
+  writable: false
+});}
+    }
               const isComment=ref(true);
               //获取文章信息:ok
               const getCurInfo=(uid)=>{

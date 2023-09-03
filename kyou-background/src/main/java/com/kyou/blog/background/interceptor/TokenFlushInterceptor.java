@@ -7,18 +7,16 @@ import com.kyou.blog.common.constant.RedisConstant;
 import com.kyou.blog.common.util.SysContext;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -48,7 +46,7 @@ public class TokenFlushInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         log.info("进入[TokenFlushInterceptor]拦截器--》{}",uri);
         String auth = request.getHeader("Authorization");
-        if(!StringUtils.isEmpty(auth)){
+        if(StringUtils.hasText(auth)){
             Claims claims = null;
             try {
                 claims = WebUtil.parseJWT(ccProperties.getTokenSecret(), auth);
@@ -60,7 +58,7 @@ public class TokenFlushInterceptor implements HandlerInterceptor {
             //查询缓存
             String val = redisUtil.getVal(RedisConstant.REFLUSH_TOKEN + id);
             SysContext.setUserId(id);
-            if (!org.springframework.util.StringUtils.hasText(val)) {
+            if (!StringUtils.hasText(val)) {
                 log.info("刷新token");
                //说明已经过了30分钟
                 Map<String,Object> map=new HashMap<>(4);

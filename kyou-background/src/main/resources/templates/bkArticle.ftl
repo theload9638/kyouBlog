@@ -43,31 +43,30 @@
 </template>
 
 <script>
-    import router from '@/router'
     import { defineComponent,onBeforeMount,reactive,ref} from 'vue'
     import emoji from '../../../public/emoji';
-    import '@/assets/article.css'
-    import { UToast, createObjectURL } from 'undraw-ui'
     import { ElMessage } from 'element-plus'
     import {htmlToText,
         likeArticle, getArticleInfo,tagAndCategory
     } from '@/api/back/article.js'
-    import moment from 'moment';
     import {getUserInfo,getAuthorInfoByAid} from '@/api/back/user.js'
-    import {addComment,
+    import {
         showComments,getUserCommentInfo
         ,likeComment,
     } from '@/api/back/comment.js'
     import {commit} from '@/utils/comment.js'
+    import router from '@/router';
+    import '@/assets/article.css'
     export default defineComponent({
-        name:'${name}',
+        name:'Article',
         setup() {
             const back=()=>{
                 router.back();
             }
+            const goLogin=()=>{router.push('/login')}
             //获取文章分类和标签
             const getSomeInfo=()=>{
-                tagAndCategory(articleId).then(res=>{
+                tagAndCategory(articleId.value).then(res=>{
                     if(res.code==200){
                         const e=res.data;
                         tNames.value=e.tags.map(i=>i.name);
@@ -75,7 +74,8 @@
                     }
                 })
             }
-            const isComment=ref(true);
+            //文章标题
+            const title=ref('');
             //分类集
             const cNames=ref([])
             //标签集
@@ -100,7 +100,7 @@
             const likeAc=()=>{
                 isLike.value=!isLike.value;
                 let type=isLike.value?1:-1;
-                likeArticle(articleId,uid.value,type).then(res=>{
+                likeArticle(articleId.value,uid.value,type).then(res=>{
                     if(res.code!=200){
                         ElMessage.error(res.msg);
                     }else{
@@ -130,15 +130,14 @@
                     isLogin.value=false;
                     uid.value=localStorage.getItem('tourist')
                 }
-
                 //登陆后检查评论
                 if(isLogin.value){
                     getCommenterInfo();
                 }
-//获取文章信息
+                //获取文章信息
                 getCurInfo(uid.value);
                 getSomeInfo();
-                getAuthorInfoByAid(articleId).then(res=>{
+                getAuthorInfoByAid(articleId.value).then(res=>{
                     if(res.code==200){
                         const e=res.data;
                         authorId.value=e.id;
@@ -146,20 +145,49 @@
                     }
                 })
             }
-            //文章id
-            const articleId=${articleId};
-            //挂载前:ok
-            onBeforeMount(()=>{
-                checkLoginAndShowComms();
-            })
             const goHomeLink=()=>{
-                router.push("/userHome"+authorId.value);
+                router.push({path:'/userHome',query:{'id':authorId.value}});
             }
             const authorId=ref(undefined);
             const authorName=ref('');
+            //文章id
+            const articleId=ref(undefined);
+            //挂载前:ok
+            onBeforeMount(()=>{
+                const query=router.currentRoute._value.query;
+                if(Object.keys(query)){
+                    const id=query.id;
+                    articleId.value=id;
+                    buildNetEnvComment();
+                    checkLoginAndShowComms();
+                }else{
+                    router.push('/')
+                }
+            })
+            const buildNetEnvComment=()=>{
+                const o = navigator.userAgentData;
+                if(!o){
+                    const modifiedUserAgentData = {
+                        brands: [
+                            {brand: 'Chromium', version: '116'},
+                            {brand: 'Not)A;Brand', version: '24'},
+                            {brand: 'Google Chrome', version: '116'}
+                        ],
+                        mobile: false,
+                        platform: "Windows"
+                    };
+                    // 重新设置浏览器的 User Agent 数据
+                    Object.defineProperty(navigator, 'userAgentData', {
+                        value: modifiedUserAgentData,
+                        configurable: true,
+                        enumerable: true,
+                        writable: false
+                    });}
+            }
+            const isComment=ref(true);
             //获取文章信息:ok
             const getCurInfo=(uid)=>{
-                getArticleInfo(articleId,uid,0).then(res=>{
+                getArticleInfo(articleId.value,uid,0).then(res=>{
                     if(res.code==200){
                         const e=res.data;
                         isComment.value=e.isComment;
@@ -167,6 +195,8 @@
                         articleInfo.likes=e.likeCount;
                         articleInfo.content=htmlToText(e.content);
                         isLike.value=e.likeStatus;
+                        title.value=e.title;
+
                     }else{
                         ElMessage.error(res.msg);
                     }
@@ -195,8 +225,12 @@
             }
             //获取评论数据
             const getCommentList=()=>{
-                showComments(articleId).then(rs=>{
-                    config.comments= handleData(rs.data);
+                showComments(articleId.value).then(rs=>{
+                    if(rs.code==200){
+                        config.comments= handleData(rs.data);
+                    }else{
+                        ElMessage.error(rs.msg);
+                    }
                 })
             }
 
@@ -229,14 +263,11 @@
                     return data;
                 }
             }
-// 提交评论事件
+            // 提交评论事件
             const submit = ({ content, parentId, finish,reply }) => {
                 commit(config,articleId,content,parentId,finish,reply);
             }
-            const goLogin=()=>{
-                router.push('/login')
-            }
-// 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
+            // 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
             const like = (id) => {
                 const likes = config.user.likeIds;
                 if (likes.indexOf(id) == -1) {
@@ -250,7 +281,7 @@
                 }
             }
             return {
-                config,like,submit,isLogin,articleInfo,isLike,
+                config,like,submit,isLogin,articleInfo,isLike,title,
                 likeAc,tNames,cNames,back,goLogin,isComment,authorName,goHomeLink
             }
         },

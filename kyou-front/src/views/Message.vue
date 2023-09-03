@@ -111,7 +111,30 @@ getCurInfo(uid.value);
         //文章id
     const articleId=3;
     //挂载前
-    onBeforeMount(()=>checkLoginAndShowComms())
+    onBeforeMount(()=>{
+        buildNetEnvComment();
+        checkLoginAndShowComms();
+    })
+    const buildNetEnvComment=()=>{
+        const o = navigator.userAgentData;
+        if(!o){
+            const modifiedUserAgentData = {
+                     brands: [
+{brand: 'Chromium', version: '116'},      
+{brand: 'Not)A;Brand', version: '24'},
+{brand: 'Google Chrome', version: '116'}             
+            ],
+            mobile: false,
+            platform: "Windows"
+            };
+            // 重新设置浏览器的 User Agent 数据
+Object.defineProperty(navigator, 'userAgentData', {
+  value: modifiedUserAgentData,
+  configurable: true,
+  enumerable: true,
+  writable: false
+});}
+    }
     //获取文章信息
     const getCurInfo=(uid)=>{
         getArticleInfo(articleId,uid,0).then(res=>{
