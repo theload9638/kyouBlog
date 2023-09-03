@@ -22,7 +22,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        log.info("自动字段填充[insert]");
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime",LocalDateTime.now());
         metaObject.setValue("createBy", String.valueOf(SysContext.getUserId()));
@@ -34,7 +33,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-        log.info("自动字段填充[update]");
         metaObject.setValue("updateTime",LocalDateTime.now());
         metaObject.setValue("updateBy",String.valueOf(SysContext.getUserId()));
     }

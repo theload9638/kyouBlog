@@ -237,9 +237,9 @@ public class TaskConfig {
         });
     }
     /**
-     * 每15分钟保存一次系统操作日志
+     * 每20分钟保存一次系统操作日志
      */
-    @Scheduled(cron = "0 0/15 * * * ?")
+    @Scheduled(cron = "0 0/20 * * * ?")
     public void saveLog(){
         log.info("开始保存日志------->");
         while (true){
