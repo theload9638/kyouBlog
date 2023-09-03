@@ -43,7 +43,7 @@
   </template>
   
   <script>
-      import { defineComponent,onBeforeMount,reactive,ref} from 'vue'
+      import { defineComponent,onBeforeMount,reactive,ref,onMounted} from 'vue'
       import emoji from '../../../public/emoji';
     //   import { UToast, createObjectURL } from 'undraw-ui'
       import { ElMessage } from 'element-plus'
@@ -110,6 +110,7 @@
                       }
                   })
               }
+              onMounted(()=>buildNetEnvComment());
               //登陆状态
               const isLogin=ref(false);
               //用户/游客标识
@@ -184,7 +185,8 @@ Object.defineProperty(navigator, 'userAgentData', {
   configurable: true,
   enumerable: true,
   writable: false
-});}
+});
+}
     }
               const isComment=ref(true);
               //获取文章信息:ok

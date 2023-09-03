@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { defineComponent,onBeforeMount,reactive,ref} from 'vue'
+import { defineComponent,onBeforeMount,reactive,ref,onMounted} from 'vue'
 import emoji from '../../public/emoji';
 // import { UToast, createObjectURL } from 'undraw-ui'
 import { ElMessage } from 'element-plus'
@@ -115,6 +115,7 @@ getCurInfo(uid.value);
         buildNetEnvComment();
         checkLoginAndShowComms();
     })
+    onMounted(()=>buildNetEnvComment());
     const buildNetEnvComment=()=>{
         const o = navigator.userAgentData;
         if(!o){
