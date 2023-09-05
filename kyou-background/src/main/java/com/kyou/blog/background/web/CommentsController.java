@@ -52,7 +52,7 @@ public class CommentsController extends BaseController{
     @PreAuthorize("@auth.authenticate()")
     public Result addComment(@RequestBody @NotEmpty Map<String,Object> map, HttpServletRequest request)
     {
-        Long articleId = Long.valueOf((Integer) map.get("articleId"));
+        Long articleId = Long.valueOf((String) map.get("articleId"));
         Article a = articleService.getById(articleId);
         //文章是否存在
         if (a == null) {

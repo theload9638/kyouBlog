@@ -269,7 +269,7 @@ Object.defineProperty(navigator, 'userAgentData', {
               }
   // 提交评论事件
               const submit = ({ content, parentId, finish,reply }) => {
-                  commit(config,articleId,content,parentId,finish,reply);
+                  commit(config,articleId.value,content,parentId,finish,reply);
               }
   // 点赞按钮事件 将评论id返回后端判断是否点赞，然后在处理点赞状态
               const like = (id) => {
