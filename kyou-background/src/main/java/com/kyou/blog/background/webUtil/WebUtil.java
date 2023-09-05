@@ -82,7 +82,7 @@ public final class WebUtil {
         String username = (String) user.get("username");
         String avatar = (String) user.get("avatar");
         Object parentId = map.get("parentId");
-        Long articleId = Long.valueOf((Integer) map.get("articleId"));
+        Long articleId = Long.valueOf((String) map.get("articleId"));
         Comments comments = new Comments();
         comments.setAddress(address);
         comments.setIp(request.getRemoteAddr());
